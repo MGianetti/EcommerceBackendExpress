@@ -3,10 +3,7 @@ const router = express.Router();
 const Product = require("../models/Product");
 
 router.post("/new", async (req, res) => {
-  await Product.create({
-    ...req.body,
-    ecommerceStoreName: "My store",
-  });
+  await Product.create(...req.body);
   res.send("sucess");
 });
 
