@@ -9,7 +9,7 @@ class Ecommerce extends Model {}
 
 Ecommerce.init(
   {
-    storeName: { type: DataTypes.STRING, allowNull: false },
+    storeName: { type: DataTypes.STRING, allowNull: false, primaryKey: true },
   },
   {
     sequelize,
