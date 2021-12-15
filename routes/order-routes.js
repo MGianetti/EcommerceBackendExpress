@@ -1,24 +1,32 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const Order = require("../models/Order");
-const Product = require("../models/Product");
+const Order = require('../models/Order');
+const Product = require('../models/Product');
 
-router.get("/all", async (req, res) => {
-  const allOrders = await Order.findAll();
-  res.send(allOrders);
+router.get('/all', async (req, res) => {
+  try {
+    const allOrders = await Order.findAll({ include: Product });
+    res.send(allOrders);
+  } catch (error) {
+    res.status(500);
+  }
 });
 
-router.post("/new", async (req, res) => {
-  const { productsIdList } = req.body;
-  const newOrder = await Order.create(req.body);
+router.post('/new', async (req, res) => {
+  try {
+    const { productsIdList } = req.body;
+    const newOrder = await Order.create();
 
-  productsIdList.map(async (id) => {
-    const product = await Product.findAll({ where: { id } });
-    newOrder.addProduct(product);
-  });
+    productsIdList.map(async id => {
+      const product = await Product.findAll({ where: { id } });
+      newOrder.addProduct(product);
+    });
 
-  res.send(newOrder);
+    res.send(newOrder);
+  } catch (error) {
+    res.status(500);
+  }
 });
 
 module.exports = router;

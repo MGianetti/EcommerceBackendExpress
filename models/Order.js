@@ -1,20 +1,18 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../database');
 
-const Product = require("./Product");
-const User = require("./User");
+const Product = require('./Product');
 
 class Order extends Model {}
 
 Order.init(
   {
-    orderId: { type: DataTypes.STRING, allowNull: false },
+    orderId: { type: DataTypes.STRING, allowNull: true },
   },
-  { sequelize, modelName: "order", timestamps: false }
+  { sequelize, modelName: 'order', timestamps: false }
 );
 
-Order.belongsToMany(Product, { through: "OrderProducts" });
-Product.belongsToMany(Order, { through: "OrderProducts" });
-Order.belongsTo(User);
+Order.belongsToMany(Product, { through: 'OrderProducts' });
+Product.belongsToMany(Order, { through: 'OrderProducts' });
 
 module.exports = Order;
