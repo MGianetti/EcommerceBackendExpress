@@ -19,7 +19,7 @@ router.post('/new', async (req, res) => {
     const newOrder = await Order.create();
 
     productsIdList.map(async id => {
-      const product = await Product.findAll({ where: { id } });
+      const product = await Product.findOne({ where: { id } });
       newOrder.addProduct(product);
     });
 
